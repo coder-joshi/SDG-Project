@@ -1,0 +1,46 @@
+[
+  {
+    "id": "usr_citizen_01",
+    "name": "Aarav Sharma",
+    "role": "citizen",
+    "email": "aarav.sharma@greenindia.org",
+    "phone": "+91 98234 56712",
+    "location": "Dehradun, Uttarakhand",
+    "organization": "Himalayan Eco-Action Cooperative",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aarav&backgroundColor=b6e3f4",
+    "totalCredits": 12480,
+    "availableCredits": 8320,
+    "usedCompliance": 3160,
+    "activeProjectsCount": 5,
+    "treesPlanted": 14250,
+    "co2OffsetMT": 312.4,
+    "waterSavedLitres": 1840000
+  },
+  {
+    "id": "usr_verifier_01",
+    "name": "Dr. Sunita Rao",
+    "role": "verifier",
+    "email": "sunita.rao@moefcc.gov.in",
+    "phone": "+91 94120 89431",
+    "designation": "Empaneled Lead Environmental Auditor",
+    "agency": "Forest Research Institute / MoEFCC India",
+    "location": "New Delhi, India",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sunita&backgroundColor=c0aede",
+    "verifiedCount": 142,
+    "pendingCount": 4
+  },
+  {
+    "id": "usr_corporate_01",
+    "name": "Vikram Mehta",
+    "role": "corporate",
+    "company": "Tata Steel Sustainability Initiative",
+    "email": "vikram.mehta@tatasteel.com",
+    "phone": "+91 98112 34567",
+    "location": "Mumbai, Maharashtra",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Vikram&backgroundColor=d1d4f9",
+    "balanceINR": 24500000,
+    "purchasedCredits": 42500,
+    "retiredCredits": 38200,
+    "esgScore": 88.4
+  }
+]

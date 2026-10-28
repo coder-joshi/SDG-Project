@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "totalCredits": 12480,
+    "availableForTrading": 8320,
+    "usedForCompliance": 3160,
+    "activeProjects": 5,
+    "growthPercentage": 18
+  },
+  "monthlyOverview": [
+    { "month": "Jan", "generated": 850, "traded": 400, "used": 200 },
+    { "month": "Feb", "generated": 920, "traded": 450, "used": 250 },
+    { "month": "Mar", "generated": 1100, "traded": 600, "used": 300 },
+    { "month": "Apr", "generated": 950, "traded": 500, "used": 220 },
+    { "month": "May", "generated": 1250, "traded": 750, "used": 280 },
+    { "month": "Jun", "generated": 1400, "traded": 800, "used": 310 },
+    { "month": "Jul", "generated": 1300, "traded": 700, "used": 290 },
+    { "month": "Aug", "generated": 1150, "traded": 650, "used": 330 },
+    { "month": "Sep", "generated": 1050, "traded": 600, "used": 260 },
+    { "month": "Oct", "generated": 1200, "traded": 720, "used": 310 },
+    { "month": "Nov", "generated": 1380, "traded": 850, "used": 340 },
+    { "month": "Dec", "generated": 1530, "traded": 900, "used": 370 }
+  ],
+  "creditsByActivity": [
+    { "name": "Tree Plantation", "percentage": 28, "credits": 3494, "color": "#1E6B3A" },
+    { "name": "Water Mgmt", "percentage": 15, "credits": 1872, "color": "#0284C7" },
+    { "name": "Green Buildings", "percentage": 14, "credits": 1747, "color": "#0D9488" },
+    { "name": "Sustainable Agri", "percentage": 12, "credits": 1498, "color": "#16A34A" },
+    { "name": "Waste Mgmt", "percentage": 10, "credits": 1248, "color": "#CA8A04" },
+    { "name": "Air Pollution", "percentage": 8, "credits": 998, "color": "#6366F1" },
+    { "name": "Mangrove", "percentage": 7, "credits": 874, "color": "#059669" },
+    { "name": "Ecomark", "percentage": 6, "credits": 749, "color": "#8B5CF6" }
+  ],
+  "impact": {
+    "treesPlanted": 14250,
+    "co2OffsetMT": 312.4,
+    "waterSavedLitres": 1840000,
+    "landRegeneratedHa": 84.5
+  }
+}

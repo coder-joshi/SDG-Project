@@ -1,0 +1,7 @@
+{
+  "name": "GreenLedger India",
+  "description": "Decentralized registry and marketplace for India's Green Credit Programme. Verify environmental actions, manage credits, and trade certified green assets.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
