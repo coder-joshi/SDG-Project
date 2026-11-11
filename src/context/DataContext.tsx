@@ -32,7 +32,7 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { currentUser, updateCurrentUserBalance } = useAuth();
+  const { currentUser, currentRole, updateCurrentUserBalance } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [creditsData, setCreditsData] = useState<CreditsData | null>(null);
   const [activities, setActivities] = useState<ActivityItem[]>([]);
@@ -74,6 +74,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addProject = async (
     newProjectData: Omit<Project, 'id' | 'status' | 'creditsGenerated' | 'creditsAvailable' | 'submittedDate'>
   ): Promise<Project> => {
+    if (currentRole !== 'citizen' || !currentUser) throw new Error('Only citizens can register projects.');
     const created = await mockApi.createProject(newProjectData);
     setProjects((prev) => [created, ...prev]);
 
@@ -102,6 +103,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     reason?: string,
     creditsAwarded: number = 1850
   ) => {
+    if (currentRole !== 'verifier' || !currentUser) throw new Error('Only verifiers can review projects.');
     const verifierName = currentUser?.name || 'Dr. Sunita Rao';
     const result = await mockApi.verifyProject(projectId, {
       approved,
@@ -151,6 +153,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     projectId: string,
     quantity: number
   ): Promise<{ success: boolean; totalCost: number }> => {
+    if (currentRole !== 'corporate' || !currentUser) throw new Error('Only corporate buyers can purchase credits.');
     const project = projects.find((p) => p.id === projectId);
     if (!project) throw new Error('Project not found');
 

@@ -40,7 +40,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onMobileClose }) =
       return [
         { to: '/marketplace', label: 'Marketplace', icon: ShoppingBag },
         { to: '/impact', label: 'ESG Impact', icon: BarChart3 },
-        { to: '/trading', label: 'Credit Trades', icon: ArrowLeftRight },
         { to: '/reports', label: 'Compliance Reports', icon: FileText },
         { to: '/profile', label: 'Corporate Profile', icon: UserIcon },
         { to: '/settings', label: 'Settings', icon: Settings }

@@ -4,10 +4,10 @@ import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
 
 export const Reports: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, currentRole } = useAuth();
   const { showToast } = useData();
 
-  const reportList = [
+  const commonReports = [
     {
       id: 'REP-2026-Q3',
       title: 'Q3 2026 Consolidated Environmental Audit Statement',
@@ -41,6 +41,31 @@ export const Reports: React.FC = () => {
       status: 'Signed & Certified'
     }
   ];
+
+  const roleReports = {
+    citizen: [
+      { id: 'DEV-2026-Q3', title: 'Project Credit & Activity Statement', category: 'Citizen Credit Ledger', date: '15 Oct 2026', size: '1.2 MB', status: 'Ready to Download' },
+      { id: 'DEV-2026-Q2', title: 'Project Verification Outcomes', category: 'Project Audit History', date: '10 Jul 2026', size: '980 KB', status: 'Ready to Download' },
+      { id: 'DEV-2026-HY', title: 'Credit Trading & Settlement Summary', category: 'Trading Statement', date: '28 Jun 2026', size: '740 KB', status: 'Ready to Download' }
+    ],
+    verifier: [
+      { id: 'VER-2026-Q3', title: 'Verification Decisions Register', category: 'Verifier Activity', date: '15 Oct 2026', size: '1.8 MB', status: 'Signed & Certified' },
+      { id: 'VER-2026-Q2', title: 'Evidence Review & Field Visit Log', category: 'Verification Audit', date: '10 Jul 2026', size: '3.4 MB', status: 'Signed & Certified' },
+      { id: 'VER-2026-HY', title: 'Registry Credit Issuance Activity', category: 'Registry Activity', date: '28 Jun 2026', size: '2.1 MB', status: 'Signed & Certified' }
+    ],
+    corporate: [
+      { id: 'BUY-2026-Q3', title: 'Corporate Credit Holdings Statement', category: 'Buyer Portfolio', date: '15 Oct 2026', size: '1.1 MB', status: 'Ready to Download' },
+      { id: 'BUY-2026-Q2', title: 'Credit Purchase & Retirement Report', category: 'Compliance Report', date: '10 Jul 2026', size: '1.6 MB', status: 'Ready to Download' },
+      { id: 'BUY-2026-HY', title: 'ESG Impact Summary', category: 'BRSR Reporting', date: '28 Jun 2026', size: '2.1 MB', status: 'Ready to Download' }
+    ]
+  };
+  const reportList = roleReports[currentRole] || commonReports;
+  const pageTitle = currentRole === 'verifier' ? 'Verification & Registry Reports' : currentRole === 'corporate' ? 'Compliance & ESG Reports' : 'My Project Reports';
+  const pageDescription = currentRole === 'verifier'
+    ? 'Review decisions, submitted evidence, and credit issuance activity.'
+    : currentRole === 'corporate'
+      ? 'Download buyer portfolio, credit retirement, and ESG impact statements.'
+      : 'Download project activity, verification outcomes, and credit trading statements.';
 
   const handleDownload = (rep: typeof reportList[0]) => {
     showToast(`Downloading ${rep.title}...`, 'info');
@@ -76,18 +101,18 @@ Hash: 0x99a1bc4f28d88e0018bce88231`;
             <span>Official Regulatory Dossier</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-1">
-            Reports & Environmental Audits
+            {pageTitle}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500">
-            Certified statements, satellite vegetation indexes, and compliance transcripts
+            {pageDescription}
           </p>
         </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-[#E5EAE7] shadow-sm overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">Available Audit Reports</h3>
-          <span className="text-xs text-slate-400 font-mono">4 Documents Available</span>
+          <h3 className="text-sm font-bold text-slate-900">Available Reports</h3>
+          <span className="text-xs text-slate-400 font-mono">{reportList.length} Documents Available</span>
         </div>
 
         <div className="divide-y divide-slate-100">

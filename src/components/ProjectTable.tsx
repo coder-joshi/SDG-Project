@@ -7,12 +7,14 @@ interface ProjectTableProps {
   projects: Project[];
   limit?: number;
   showAllLink?: boolean;
+  showView?: boolean;
 }
 
 export const ProjectTable: React.FC<ProjectTableProps> = ({
   projects,
   limit,
-  showAllLink = false
+  showAllLink = false,
+  showView = false
 }) => {
   const navigate = useNavigate();
   const displayList = limit ? projects.slice(0, limit) : projects;
@@ -82,13 +84,13 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
               <th className="py-3 px-4">Location</th>
               <th className="py-3 px-4 text-center">Status</th>
               <th className="py-3 px-4 text-right">Credits Minted</th>
-              <th className="py-3 px-4 text-center">Action</th>
+              {showView && <th className="py-3 px-4 text-center">Details</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 font-normal">
             {displayList.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-8 text-center text-slate-400 text-xs">
+                <td colSpan={showView ? 6 : 5} className="py-8 text-center text-slate-400 text-xs">
                   No projects registered yet. Click &quot;Register Project&quot; to submit your first ecological plot.
                 </td>
               </tr>
@@ -96,8 +98,7 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
               displayList.map((project) => (
                 <tr
                   key={project.id}
-                  className="hover:bg-slate-50/80 transition-colors group cursor-pointer"
-                  onClick={() => navigate(`/marketplace/${project.id}`)}
+                  className="hover:bg-slate-50/80 transition-colors group"
                 >
                   <td className="py-3.5 px-4 font-medium text-slate-900">
                     <div className="font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors truncate max-w-xs sm:max-w-sm">
@@ -130,17 +131,12 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
                       <span className="text-slate-400 font-normal">0 GCP</span>
                     )}
                   </td>
-                  <td className="py-3.5 px-4 text-center">
+                  {showView && <td className="py-3.5 px-4 text-center">
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/marketplace/${project.id}`);
-                      }}
+                      onClick={() => navigate(`/marketplace/${project.id}`)}
                       className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline px-2 py-1"
-                    >
-                      View
-                    </button>
-                  </td>
+                    >View details</button>
+                  </td>}
                 </tr>
               ))
             )}

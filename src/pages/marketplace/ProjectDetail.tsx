@@ -21,7 +21,7 @@ export const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { projects, buyCredits, showToast } = useData();
-  const { currentUser } = useAuth();
+  const { currentUser, currentRole } = useAuth();
 
   const project = projects.find((p) => p.id === id);
 
@@ -264,24 +264,25 @@ STATUS: TRANSFERRED & RETIRED/HELD IN ESG WALLET`;
               </div>
             </div>
 
-            <button
-              onClick={() => setBuyModalOpen(true)}
-              disabled={maxAvailable <= 0}
-              className="w-full py-3 rounded-xl bg-[#2E7D32] hover:bg-[#256628] disabled:opacity-50 text-white text-xs font-bold shadow-md shadow-emerald-950/20 transition-all flex items-center justify-center gap-2"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>{maxAvailable > 0 ? 'Buy Green Credits' : 'Sold Out'}</span>
-            </button>
-
-            <p className="text-[11px] text-slate-400 text-center leading-normal">
-              Purchased credits are immediately transferred to your ESG ledger and can be surrendered for environmental compliance or CSR reporting.
-            </p>
+            {currentRole === 'corporate' ? <>
+              <button
+                onClick={() => setBuyModalOpen(true)}
+                disabled={maxAvailable <= 0}
+                className="w-full py-3 rounded-xl bg-[#2E7D32] hover:bg-[#256628] disabled:opacity-50 text-white text-xs font-bold shadow-md shadow-emerald-950/20 transition-all flex items-center justify-center gap-2"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>{maxAvailable > 0 ? 'Buy Green Credits' : 'Sold Out'}</span>
+              </button>
+              <p className="text-[11px] text-slate-400 text-center leading-normal">
+                Purchased credits are transferred to your ESG ledger for compliance or CSR reporting.
+              </p>
+            </> : <p className="rounded-xl bg-slate-50 p-3 text-center text-xs text-slate-500">Project details are available in read-only mode.</p>}
           </div>
         </div>
       </div>
 
       {/* Buy Credits Modal */}
-      {buyModalOpen && (
+      {currentRole === 'corporate' && buyModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95">
             {!receiptData ? (

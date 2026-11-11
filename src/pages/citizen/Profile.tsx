@@ -81,8 +81,7 @@ export const Profile: React.FC = () => {
           </div>
         </div>
 
-        {/* Financial & Settlement Linkage */}
-        <div className="pt-4 border-t border-slate-100">
+        {currentRole === 'citizen' && <div className="pt-4 border-t border-slate-100">
           <h3 className="text-sm font-bold text-slate-900 mb-3">Linked Payout & Settlement Account</h3>
           <div className="p-4 rounded-xl bg-emerald-50/50 border border-emerald-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-0.5">
@@ -94,7 +93,7 @@ export const Profile: React.FC = () => {
               Direct Benefit Transfer Active
             </span>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

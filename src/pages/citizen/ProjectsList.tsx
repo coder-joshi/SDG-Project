@@ -4,16 +4,23 @@ import { PlusCircle, Search, Filter, MapPin, ShieldCheck, Clock, AlertCircle } f
 import { useData } from '../../context/DataContext';
 import { ProjectTable } from '../../components/ProjectTable';
 import { ProjectStatus } from '../../types';
+import { useAuth } from '../../context/AuthContext';
 
 export const ProjectsList: React.FC = () => {
   const navigate = useNavigate();
   const { projects } = useData();
+  const { currentUser, currentRole } = useAuth();
+
+  const visibleProjects = useMemo(
+    () => currentRole === 'verifier' ? projects : projects.filter((project) => project.applicantId === currentUser?.id),
+    [projects, currentRole, currentUser?.id]
+  );
 
   const [activeTab, setActiveTab] = useState<'All' | ProjectStatus>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredProjects = useMemo(() => {
-    return projects.filter((p) => {
+    return visibleProjects.filter((p) => {
       const matchesTab = activeTab === 'All' || p.status === activeTab;
       const matchesSearch =
         p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -22,16 +29,16 @@ export const ProjectsList: React.FC = () => {
         p.activityType.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesTab && matchesSearch;
     });
-  }, [projects, activeTab, searchQuery]);
+  }, [visibleProjects, activeTab, searchQuery]);
 
   const counts = useMemo(() => {
     return {
-      all: projects.length,
-      active: projects.filter((p) => p.status === 'Active').length,
-      underReview: projects.filter((p) => p.status === 'Under Review' || p.status === 'Submitted').length,
-      rejected: projects.filter((p) => p.status === 'Rejected').length
+      all: visibleProjects.length,
+      active: visibleProjects.filter((p) => p.status === 'Active').length,
+      underReview: visibleProjects.filter((p) => p.status === 'Under Review' || p.status === 'Submitted').length,
+      rejected: visibleProjects.filter((p) => p.status === 'Rejected').length
     };
-  }, [projects]);
+  }, [visibleProjects]);
 
   return (
     <div className="space-y-6">
@@ -39,20 +46,20 @@ export const ProjectsList: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-            Registered Environmental Projects
+            {currentRole === 'verifier' ? 'All Registered Environmental Projects' : 'My Registered Environmental Projects'}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Track verification milestones, plot geotags, and minted green credits across India
           </p>
         </div>
 
-        <button
+        {currentRole === 'citizen' && <button
           onClick={() => navigate('/projects/new')}
           className="px-4 py-2.5 rounded-xl bg-[#2E7D32] hover:bg-[#256628] text-white text-xs sm:text-sm font-semibold shadow-sm transition-all flex items-center gap-2 self-start sm:self-auto"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Register New Project</span>
-        </button>
+        </button>}
       </div>
 
       {/* Tabs & Search */}
@@ -115,7 +122,7 @@ export const ProjectsList: React.FC = () => {
       </div>
 
       {/* Projects Table */}
-      <ProjectTable projects={filteredProjects} />
+      <ProjectTable projects={filteredProjects} showView={currentRole === 'verifier'} />
     </div>
   );
 };

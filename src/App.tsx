@@ -54,7 +54,7 @@ export default function App() {
               <Route
                 path="/projects"
                 element={
-                  <ProtectedRoute allowedRoles={['citizen', 'verifier']}>
+                    <ProtectedRoute allowedRoles={['citizen', 'verifier']}>
                     <ProjectsList />
                   </ProtectedRoute>
                 }
@@ -78,7 +78,7 @@ export default function App() {
               <Route
                 path="/trading"
                 element={
-                  <ProtectedRoute allowedRoles={['citizen', 'corporate']}>
+                    <ProtectedRoute allowedRoles={['citizen']}>
                     <TradingExchange />
                   </ProtectedRoute>
                 }
@@ -122,7 +122,7 @@ export default function App() {
               <Route
                 path="/marketplace"
                 element={
-                  <ProtectedRoute allowedRoles={['corporate', 'citizen']}>
+                  <ProtectedRoute allowedRoles={['corporate']}>
                     <Marketplace />
                   </ProtectedRoute>
                 }
@@ -130,7 +130,7 @@ export default function App() {
               <Route
                 path="/marketplace/:id"
                 element={
-                  <ProtectedRoute allowedRoles={['corporate', 'citizen', 'verifier']}>
+                  <ProtectedRoute allowedRoles={['corporate', 'verifier']}>
                     <ProjectDetail />
                   </ProtectedRoute>
                 }

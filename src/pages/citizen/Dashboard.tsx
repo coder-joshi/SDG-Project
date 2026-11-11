@@ -6,7 +6,6 @@ import {
   ShieldCheck,
   FolderKanban,
   PlusCircle,
-  ShoppingBag,
   FileDown,
   TrendingUp,
   Sparkles,
@@ -36,6 +35,7 @@ export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { projects, creditsData, activities, showToast } = useData();
+  const myProjects = projects.filter((project) => project.applicantId === currentUser?.id);
 
   const [timeRange, setTimeRange] = useState<'12m' | '2026' | '2025'>('12m');
 
@@ -116,12 +116,6 @@ Status: VERIFIED & COMPLIANT WITH BRSR CORE FRAMEWORK`;
                 <span>Register Project</span>
               </button>
 
-              <button
-                onClick={() => navigate('/marketplace')}
-                className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/20 backdrop-blur-sm transition-all"
-              >
-                Explore Marketplace
-              </button>
             </div>
           </div>
 
@@ -324,7 +318,7 @@ Status: VERIFIED & COMPLIANT WITH BRSR CORE FRAMEWORK`;
           {/* 4. MY PROJECTS TABLE & QUICK ACTIONS */}
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <div className="xl:col-span-2">
-              <ProjectTable projects={projects} limit={4} showAllLink={true} />
+              <ProjectTable projects={myProjects} limit={4} showAllLink={true} />
             </div>
 
             {/* Quick Actions 2x2 Grid */}
@@ -358,19 +352,6 @@ Status: VERIFIED & COMPLIANT WITH BRSR CORE FRAMEWORK`;
                   <div className="mt-2">
                     <p className="text-xs font-bold text-slate-900 group-hover:text-sky-800">Buy / Sell</p>
                     <p className="text-[10px] text-slate-500">P2P Trading</p>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => navigate('/marketplace')}
-                  className="p-3 rounded-xl border border-purple-200 bg-purple-50/50 hover:bg-purple-50 hover:border-purple-300 text-left transition-all flex flex-col justify-between group"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
-                    <ShoppingBag className="w-4 h-4" />
-                  </div>
-                  <div className="mt-2">
-                    <p className="text-xs font-bold text-slate-900 group-hover:text-purple-800">Marketplace</p>
-                    <p className="text-[10px] text-slate-500">Verified Credits</p>
                   </div>
                 </button>
 
