@@ -1,0 +1,287 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>GreenLedger India</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: sticky header, two-column hero (intro + sample ledger), info sections, role cards, footer. One committed light look on white. */
+  :root {
+    color-scheme: light;
+    --bg: #ffffff;
+    --bg-soft: #f4faf6;
+    --fg: #0f1f18;
+    --muted: #54635b;
+    --line: #e3ece6;
+    --green: #059669;
+    --green-dark: #047857;
+    --green-deep: #064e3b;
+    --green-soft: #d1fae5;
+    --green-ring: rgba(5, 150, 105, .22);
+    --err: #b91c1c;
+    --err-bg: #fef2f2;
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+  button, input { font: inherit; }
+  a { color: inherit; text-decoration: none; }
+  svg { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .wrap { max-width: 1120px; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--green-ring); outline-offset: 2px; }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: background .15s, border-color .15s; }
+  .btn-fill { background: var(--green); color: #fff; }
+  .btn-fill:hover { background: var(--green-dark); }
+  .btn-line { background: #fff; color: var(--green-deep); border-color: #b7d9c6; }
+  .btn-line:hover { background: var(--bg-soft); border-color: var(--green); }
+  .btn-lg { padding: 13px 22px; font-size: 16px; }
+
+  /* header */
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: rgba(255,255,255,.94); z-index: 30; }
+  header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(255,255,255,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 19px; letter-spacing: -.01em; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; display: grid; place-items: center; font-size: 20px; }
+  .brand em { font-style: normal; color: var(--green); }
+  nav.links { display: flex; gap: 28px; font-size: 15px; font-weight: 500; color: var(--muted); }
+  nav.links a:hover { color: var(--green-dark); }
+  .auth { display: flex; gap: 8px; }
+  @media (max-width: 760px) { nav.links { display: none; } .auth .btn { padding: 9px 14px; font-size: 14px; } }
+
+  /* hero */
+  .hero { padding-block: 64px 72px; background: linear-gradient(180deg, var(--bg-soft), #fff 70%); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 48px; align-items: center; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; } .hero { padding-block: 40px 56px; } }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--green-dark); background: var(--green-soft); padding: 6px 12px; border-radius: 999px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; margin-top: 18px; letter-spacing: -.02em; }
+  .hero h1 span { color: var(--green); }
+  .lead { margin: 18px 0 0; font-size: 18px; color: var(--muted); max-width: 560px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 28px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
+  .facts li { display: flex; align-items: center; gap: 8px; }
+  .facts svg { color: var(--green); }
+
+  /* sample ledger card */
+  .ledger { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 24px 48px -28px rgba(6, 78, 59, .35); overflow: hidden; }
+  .ledger-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--bg-soft); font-size: 13px; font-weight: 600; color: var(--green-deep); }
+  .ledger-head small { font-weight: 500; color: var(--muted); }
+  .entry { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .entry:last-of-type { border-bottom: 0; }
+  .entry-ic { width: 36px; height: 36px; border-radius: 10px; background: var(--green-soft); color: var(--green-dark); display: grid; place-items: center; font-size: 18px; }
+  .entry b { display: block; font-size: 14px; font-weight: 600; }
+  .entry span { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+  .pill { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+  .pill.ok { background: var(--green-soft); color: var(--green-dark); }
+  .pill.wait { background: #fef3c7; color: #92400e; }
+  .pill.sold { background: #e0f2fe; color: #0369a1; }
+  .ledger-foot { padding: 10px 18px; font-size: 12px; color: var(--muted); background: var(--bg-soft); border-top: 1px solid var(--line); }
+
+  /* sections */
+  section.block { padding-block: 72px; }
+  section.soft { background: var(--bg-soft); }
+  .head { max-width: 640px; margin-bottom: 40px; }
+  .head .kick { font-size: 13px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: .08em; }
+  .head h2 { font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; margin-top: 8px; letter-spacing: -.01em; }
+  .head p { margin: 12px 0 0; color: var(--muted); }
+  .about-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  @media (max-width: 760px) { .about-grid { grid-template-columns: minmax(0, 1fr); } section.block { padding-block: 52px; } }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+  .panel h3 { font-size: 18px; font-weight: 700; }
+  .panel p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+  .panel ul { margin: 12px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
+  .panel li + li { margin-top: 6px; }
+
+  .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  @media (max-width: 860px) { .flow { grid-template-columns: minmax(0, 1fr); } }
+  .flow li { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; position: relative; }
+  .flow li::before { counter-increment: s; content: counter(s); font-family: var(--font-mono); font-size: 13px; width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; margin-bottom: 14px; }
+  .flow h3 { font-size: 18px; font-weight: 700; }
+  .flow p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+
+  .roles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 960px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .roles { grid-template-columns: minmax(0, 1fr); } }
+  .role { border: 1px solid var(--line); border-radius: 16px; padding: 22px; background: #fff; display: flex; flex-direction: column; gap: 10px; }
+  .role .ic { width: 42px; height: 42px; border-radius: 12px; background: var(--green-soft); color: var(--green-dark); display: grid; place-items: center; font-size: 21px; }
+  .role h3 { font-size: 17px; font-weight: 700; }
+  .role p { margin: 0; font-size: 14px; color: var(--muted); flex: 1; }
+  .role button { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--green-dark); font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+  .role button:hover { text-decoration: underline; }
+
+  .band { background: var(--green-deep); color: #fff; border-radius: 20px; padding: 40px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; }
+  .band h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; }
+  .band p { margin: 8px 0 0; color: rgba(236, 253, 245, .78); }
+  .band .btn-fill { background: #fff; color: var(--green-deep); }
+  .band .btn-fill:hover { background: var(--green-soft); }
+  .band .btn-line { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
+  .band .btn-line:hover { background: rgba(255,255,255,.1); }
+  footer { padding-block: 32px 40px; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 24px; }
+
+  /* modal */
+  .overlay { position: fixed; inset: 0; z-index: 50; background: rgba(6, 30, 22, .55); display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); }
+  .modal { position: relative; width: 100%; max-width: 460px; margin-block: auto; background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 30px 70px -20px rgba(0,0,0,.45); }
+  .close { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--bg-soft); color: var(--muted); cursor: pointer; display: grid; place-items: center; font-size: 18px; }
+  .close:hover { background: var(--green-soft); color: var(--green-deep); }
+  .modal h2 { font-size: 24px; font-weight: 800; padding-right: 36px; }
+  .modal .sub { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--bg-soft); border: 1px solid var(--line); padding: 4px; border-radius: 12px; margin-top: 20px; }
+  .seg button { border: 0; background: transparent; padding: 9px; border-radius: 9px; font-weight: 600; font-size: 14px; color: var(--muted); cursor: pointer; }
+  .seg button[aria-selected="true"] { background: #fff; color: var(--green-deep); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .lab { display: block; font-size: 13px; font-weight: 600; margin: 18px 0 8px; }
+  .chips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .chip { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 9px 2px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .chip svg { font-size: 16px; }
+  .chip:hover { border-color: var(--green); color: var(--green-dark); }
+  .chip[aria-checked="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+  .role-note { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+  form { display: grid; gap: 14px; margin-top: 4px; }
+  .f label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .f input { width: 100%; padding: 11px 14px; border: 1px solid #cfdcd4; border-radius: 10px; background: #fff; color: var(--fg); font-size: 15px; outline: none; transition: border-color .15s, box-shadow .15s; }
+  .f input:focus { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-ring); }
+  .f input[aria-invalid="true"] { border-color: var(--err); }
+  .f .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .f .row label { margin-bottom: 6px; }
+  .link { border: 0; background: none; padding: 0; color: var(--green-dark); font-weight: 600; font-size: 13px; cursor: pointer; }
+  .link:hover { text-decoration: underline; }
+  .msg { margin: 4px 0 0; font-size: 12px; color: var(--err); }
+  .pwbox { position: relative; }
+  .pwbox input { padding-right: 56px; }
+  .pwbox button { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: none; color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px; }
+  .done { background: var(--green-soft); color: var(--green-deep); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  .swap { margin: 18px 0 0; text-align: center; font-size: 14px; color: var(--muted); }
+  .swap .link { font-size: 14px; }
+  @media (max-width: 420px) { .modal { padding: 22px 18px; } }
+  @media (prefers-reduced-motion: no-preference) { .modal { animation: pop .18s ease both; } @keyframes pop { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } } }
+</style>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="GreenLedger India home">
+      <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.7 5-7.1 2.5-1.1 5-1.9 8-1.9"/></svg></span>
+      <span>GreenLedger <em>India</em></span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#about">About</a><a href="#how">How it works</a><a href="#roles">Who it's for</a>
+    </nav>
+    <div class="auth">
+      <button class="btn btn-line" data-open="signin">Sign in</button>
+      <button class="btn btn-fill" data-open="signin">Get access</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Built for India's Green Credit Programme</span>
+        <h1>Turn verified environmental action into <span>trusted green credits</span></h1>
+        <p class="lead">GreenLedger India is a decentralised registry and marketplace. Sellers register actions such as tree plantation and water conservation, verifiers audit them, and buyers trade the certified credits, all on one tamper-proof record.</p>
+        <div class="cta">
+          <button class="btn btn-fill btn-lg" data-open="signin">Sign in to your account</button>
+          <button class="btn btn-line btn-lg" data-open="signin">Sign in</button>
+        </div>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Geo-tagged evidence</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Independent verification</li>
+          <li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Public audit trail</li>
+        </ul>
+      </div>
+
+      <div class="ledger" aria-label="Example registry entries">
+        <div class="ledger-head"><span>Credit registry</span><small>Example entries</small></div>
+        <div class="entry">
+          <span class="entry-ic"><svg viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8Z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2Z"/></svg></span>
+          <div><b>Tree plantation, Kolar</b><span>GL-2041 · 1,200 saplings</span></div>
+          <span class="pill ok">Verified</span>
+        </div>
+        <div class="entry">
+          <span class="entry-ic"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span>
+          <div><b>Farm pond restoration</b><span>GL-2057 · field visit booked</span></div>
+          <span class="pill wait">In review</span>
+        </div>
+        <div class="entry">
+          <span class="entry-ic"><svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span>
+          <div><b>Waste recycling unit</b><span>GL-1988 · 40 credits</span></div>
+          <span class="pill sold">Retired</span>
+        </div>
+        <div class="ledger-foot">Sample data for illustration only.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="head">
+        <span class="kick">About the project</span>
+        <h2>Why a shared registry matters</h2>
+        <p>India's Green Credit Programme, run by the Ministry of Environment, Forest and Climate Change, encourages voluntary environmental actions. Those actions need records that every party can check.</p>
+      </div>
+      <div class="about-grid">
+        <div class="panel">
+          <h3>The problem</h3>
+          <ul>
+            <li>Claims are hard to check without site visits and paperwork.</li>
+            <li>The same action can be counted twice across registries.</li>
+            <li>Buyers cannot easily trace where a credit came from.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>What GreenLedger does</h3>
+          <ul>
+            <li>Stores every action, review and sale as a permanent ledger record.</li>
+            <li>Requires accredited verifiers to approve a claim before credits exist.</li>
+            <li>Lets buyers see the full history of each credit they hold.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block soft" id="how">
+    <div class="wrap">
+      <div class="head">
+        <span class="kick">How it works</span>
+        <h2>From action to certified credit in three steps</h2>
+      </div>
+      <ol class="flow">
+        <li><h3>Act and register</h3><p>A seller logs an action such as plantation, water conservation or recycling, and uploads geo-tagged photos and documents.</p></li>
+        <li><h3>Verify and certify</h3><p>An accredited verifier reviews the evidence, approves or rejects the claim, and the decision is recorded for audit.</p></li>
+        <li><h3>Trade and retire</h3><p>Approved credits are listed on the marketplace. Buyers purchase them and retire them against compliance or CSR goals.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="roles">
+    <div class="wrap">
+      <div class="head">
+        <span class="kick">Who it's for</span>
+        <h2>One platform, three roles</h2>
+        <p>Sign in to a role based account. Each role gets its own dashboard and permissions.</p>
+      </div>
+      <div class="roles">
+        <div class="role"><span class="ic"><svg viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/></svg></span><h3>Seller</h3><p>Register projects, submit evidence and list verified credits for sale.</p><button data-open="signin" data-role="seller">Sign in as seller <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></div>
+        <div class="role"><span class="ic"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><h3>Verifier</h3><p>Inspect submitted projects and approve or reject claims with a recorded reason.</p><button data-open="signin" data-role="verifier">Sign in as verifier <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></div>
+        <div class="role"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span><h3>Buyer</h3><p>Browse certified credits, purchase them and track the impact you retire.</p><button data-open="signin" data-role="buyer">Sign in as buyer <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></div>
+        
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>GreenLedger India · Green Credit Programme registry</span><span>Full stack development project</span></div></footer>
+
+<script>
+  document.addEventListener('click', function (event) {
+    var trigger = event.target.closest('[data-open]');
+    if (trigger) { event.preventDefault(); window.location.href = '/login'; }
+  });
+</script>
+</body></html>

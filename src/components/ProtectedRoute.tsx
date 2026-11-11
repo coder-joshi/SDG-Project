@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, children }) => {
-  const { currentRole, isLoadingAuth } = useAuth();
+  const { currentRole, currentUser, isLoadingAuth } = useAuth();
 
   if (isLoadingAuth) {
     return (
@@ -21,6 +21,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, ch
       </div>
     );
   }
+
+  if (!currentUser) return <Navigate to="/login" replace />;
 
   if (!allowedRoles.includes(currentRole)) {
     // Redirect to home for this role

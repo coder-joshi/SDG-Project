@@ -19,9 +19,12 @@ import { VerifierQueue } from './pages/verifier/VerifierQueue';
 import { Marketplace } from './pages/marketplace/Marketplace';
 import { ProjectDetail } from './pages/marketplace/ProjectDetail';
 import { ImpactAnalytics } from './pages/corporate/ImpactAnalytics';
+import { Landing } from './pages/Landing';
 
 const RootRedirect: React.FC = () => {
-  const { currentRole } = useAuth();
+  const { currentRole, currentUser, isLoadingAuth } = useAuth();
+  if (isLoadingAuth) return null;
+  if (!currentUser) return <Navigate to="/login" replace />;
   if (currentRole === 'verifier') return <Navigate to="/verifier/queue" replace />;
   if (currentRole === 'corporate') return <Navigate to="/marketplace" replace />;
   return <Navigate to="/dashboard" replace />;
@@ -35,11 +38,10 @@ export default function App() {
           <Routes>
             {/* Login / Role Switcher */}
             <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Landing />} />
 
             {/* Layout Wrapper */}
             <Route element={<Layout />}>
-              <Route path="/" element={<RootRedirect />} />
-
               {/* Citizen Routes */}
               <Route
                 path="/dashboard"
